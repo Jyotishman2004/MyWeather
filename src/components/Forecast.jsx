@@ -24,6 +24,10 @@ const Forecast = ({ daily }) => {
   
   const visibleDays = isExpanded ? daily : daily.slice(0, 6);
   
+  const minWeeklyTemp = Math.min(...daily.map(d => d.low));
+  const maxWeeklyTemp = Math.max(...daily.map(d => d.high));
+  const tempRange = Math.max(maxWeeklyTemp - minWeeklyTemp, 1);
+
   return (
     <motion.div 
       initial={{ opacity: 0, y: 30 }}
@@ -58,7 +62,7 @@ const Forecast = ({ daily }) => {
                 transition: 'background 0.3s'
               }}
             >
-              <span style={{ width: '60px', fontWeight: day.day === 'Today' ? 600 : 400 }}>{day.day}</span>
+              <span style={{ width: '90px', flexShrink: 0, fontWeight: day.day === 'Today' ? 600 : 400 }}>{day.day}</span>
               
               <div style={{ display: 'flex', alignItems: 'center', gap: '0.5rem', width: '80px', opacity: 0.8 }}>
                 {getIcon(day.icon)}
@@ -67,18 +71,10 @@ const Forecast = ({ daily }) => {
                 )}
               </div>
               
-              <div style={{ display: 'flex', alignItems: 'center', gap: '1rem', width: '100px', justifyContent: 'flex-end' }}>
-                <span style={{ opacity: 0.6 }}>{day.low}&deg;</span>
-                <div style={{ flex: 1, height: '6px', background: 'rgba(0,0,0,0.2)', borderRadius: '3px', overflow: 'hidden' }}>
-                  <div style={{ 
-                    height: '100%', 
-                    background: 'linear-gradient(90deg, #42A5F5 0%, #66BB6A 50%, #EF5350 100%)',
-                    width: `${((day.high - day.low) / 25) * 100}%`,
-                    marginLeft: `${((day.low - 0) / 35) * 100}%`,
-                    borderRadius: '3px'
-                  }}></div>
-                </div>
-                <span style={{ fontWeight: 500 }}>{day.high}&deg;</span>
+              <div style={{ display: 'flex', alignItems: 'center', gap: '0.4rem', width: '90px', justifyContent: 'flex-end' }}>
+                <span style={{ color: '#90CAF9', opacity: 0.9 }}>{day.low}&deg;</span>
+                <span style={{ opacity: 0.3, fontSize: '0.9rem' }}>/</span>
+                <span style={{ color: '#FFB74D', fontWeight: 600 }}>{day.high}&deg;</span>
               </div>
             </motion.div>
           ))}
