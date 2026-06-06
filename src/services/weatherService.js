@@ -115,13 +115,19 @@ const processWeatherData = async (currentRes, forecastRes) => {
 
   const timezone = currentData.timezone;
 
-  // Fetch UV Index
-  let uviValue = "N/A";
+  // Fetch UV Index (Real-time)
+  let uviValue = "0 Low";
   try {
-    const uviRes = await fetch(`${BASE_URL}/uvi?lat=${currentData.coord.lat}&lon=${currentData.coord.lon}&appid=${API_KEY}`);
+    const uviRes = await fetch(`https://api.open-meteo.com/v1/forecast?latitude=${currentData.coord.lat}&longitude=${currentData.coord.lon}&current=uv_index`);
     if (uviRes.ok) {
       const uviData = await uviRes.json();
-      uviValue = `${Math.round(uviData.value)} ${getUviLabel(uviData.value)}`;
+      const uv = uviData.current ? uviData.current.uv_index : 0;
+      
+      // Safety check: UV is exactly 0 if it's night time
+      const isNight = currentData.dt < currentData.sys.sunrise || currentData.dt > currentData.sys.sunset;
+      const finalUv = isNight ? 0 : Math.round(uv);
+      
+      uviValue = `${finalUv} ${getUviLabel(finalUv)}`;
     }
   } catch (e) {
     console.error("Failed to fetch UVI", e);
