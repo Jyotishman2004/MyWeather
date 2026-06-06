@@ -46,25 +46,27 @@ const WeatherMetrics = ({ metrics, sunrise, sunset, sunriseTime, sunsetTime, cur
       {Object.entries(metrics).map(([key, value]) => {
         const { icon: Icon, color } = metricIcons[key];
         return (
-          <motion.div 
-            key={key} 
-            variants={item}
-            className="glass-card"
-            style={{
-              padding: '1.25rem 2rem',
-              display: 'flex',
-              flexDirection: 'column',
-              alignItems: 'center',
-              gap: '0.5rem',
-              borderTop: `2px solid ${color}40`
-            }}
-          >
-            <div style={{ display: 'flex', alignItems: 'center', gap: '0.5rem', opacity: 0.8, fontSize: '0.85rem' }}>
-              <Icon size={18} color={color} />
-              <span>{metricLabels[key]}</span>
-            </div>
-            <div style={{ fontSize: '1.25rem', fontWeight: 500 }}>
-              {value}
+          <motion.div key={key} variants={item} style={{ height: '100%' }}>
+            <div 
+              className="glass-card"
+              style={{
+                height: '100%',
+                padding: '1.25rem 2rem',
+                display: 'flex',
+                flexDirection: 'column',
+                alignItems: 'center',
+                justifyContent: 'center',
+                gap: '0.5rem',
+                borderTop: `2px solid ${color}40`
+              }}
+            >
+              <div style={{ display: 'flex', alignItems: 'center', gap: '0.5rem', opacity: 0.8, fontSize: '0.85rem' }}>
+                <Icon size={18} color={color} />
+                <span>{metricLabels[key]}</span>
+              </div>
+              <div style={{ fontSize: '1.25rem', fontWeight: 500 }}>
+                {value}
+              </div>
             </div>
           </motion.div>
         );
