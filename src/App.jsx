@@ -64,7 +64,7 @@ function App() {
   };
 
   return (
-    <div style={{ position: 'relative', minHeight: '100vh', width: '100vw', overflowX: 'hidden' }}>
+    <div style={{ position: 'relative', minHeight: '100dvh', width: '100%', overflowX: 'hidden' }}>
       <WeatherBackground condition={weatherData?.condition || 'Clear'} />
       
       <main style={{ position: 'relative', zIndex: 10, padding: '2rem 4%', maxWidth: '1600px', margin: '0 auto', display: 'flex', flexDirection: 'column', gap: '2rem' }}>

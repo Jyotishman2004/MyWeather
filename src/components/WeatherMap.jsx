@@ -40,6 +40,7 @@ const createPulsingIcon = (color = '#60A5FA') => {
           position:absolute;top:0;left:0;width:20px;height:20px;
           background:${color};border-radius:50%;opacity:0.4;
           animation: pulse-ring 1.5s cubic-bezier(0.215,0.61,0.355,1) infinite;
+          will-change: transform, opacity;
         "></div>
         <div style="
           position:absolute;top:4px;left:4px;width:12px;height:12px;
@@ -268,10 +269,19 @@ const WeatherMap = ({ lat, lon, onLocationClick, locationName }) => {
         <MapContainer
           center={center}
           zoom={7}
-          scrollWheelZoom={true}
-          zoomControl={false}
+          scrollWheelZoom={inFullscreen}
+          dragging={inFullscreen}
+          touchZoom={inFullscreen}
+          doubleClickZoom={inFullscreen}
+          zoomControl={inFullscreen}
           attributionControl={false}
-          style={{ width: '100%', height: '100%', borderRadius: '20px' }}
+          style={{ 
+            width: '100%', 
+            height: '100%', 
+            borderRadius: '20px',
+            transform: 'translateZ(0)',
+            willChange: 'transform'
+          }}
         >
           <TileLayer
             url="https://{s}.basemaps.cartocdn.com/dark_all/{z}/{x}/{y}{r}.png"

@@ -109,11 +109,12 @@ const WeatherBackground = ({ condition }) => {
     <div 
       style={{ 
         position: 'fixed', 
-        inset: 0, 
+        top: '-100px', left: '-100px', right: '-100px', bottom: '-100px',
         zIndex: -3, // Base gradient is the deepest layer
         overflow: 'hidden',
         background: bgGradient,
-        transition: 'background 2s ease-in-out'
+        transition: 'background 2s ease-in-out',
+        transform: 'translateZ(0)'
       }}
     >
       <AnimatePresence mode="wait">
@@ -130,10 +131,11 @@ const WeatherBackground = ({ condition }) => {
             {/* Core Sun */}
             <motion.div
               style={{
-                position: 'absolute', top: '15%', left: '30%',
+                position: 'absolute', top: '140px', left: '30%',
                 width: '120px', height: '120px', borderRadius: '50%',
                 background: 'white',
-                boxShadow: '0 0 100px 40px rgba(255, 255, 200, 0.8)'
+                boxShadow: '0 0 100px 40px rgba(255, 255, 200, 0.8)',
+                willChange: 'transform'
               }}
               animate={{ scale: [1, 1.05, 1], opacity: [0.9, 1, 0.9] }}
               transition={{ duration: 4, repeat: Infinity, ease: 'easeInOut' }}
@@ -141,10 +143,11 @@ const WeatherBackground = ({ condition }) => {
             {/* Large Atmospheric Lens Flare */}
             <motion.div
               style={{
-                position: 'absolute', top: '-10%', left: '-10%',
-                width: '80%', height: '80%', borderRadius: '50%',
+                position: 'absolute', top: '50px', left: '10%',
+                width: '80vw', height: '80vw', maxWidth: '800px', maxHeight: '800px', borderRadius: '50%',
                 background: 'radial-gradient(circle, rgba(255, 235, 150, 0.3) 0%, rgba(255, 200, 100, 0.1) 40%, transparent 70%)',
-                mixBlendMode: 'screen', filter: 'blur(40px)'
+                mixBlendMode: 'screen', filter: 'blur(40px)',
+                willChange: 'transform'
               }}
               animate={{ scale: [1, 1.2, 1], opacity: [0.6, 0.8, 0.6] }}
               transition={{ duration: 8, repeat: Infinity, ease: 'easeInOut' }}
@@ -164,7 +167,7 @@ const WeatherBackground = ({ condition }) => {
             {/* Crisp Minimalist Moon */}
             <div
               style={{
-                position: 'absolute', top: '20%', right: '20%',
+                position: 'absolute', top: '150px', right: '20%',
                 width: '80px', height: '80px', borderRadius: '50%',
                 background: 'white',
                 boxShadow: '0 0 80px 20px rgba(255, 255, 255, 0.3), inset -15px -15px 20px rgba(0,0,0,0.1)'
@@ -185,9 +188,9 @@ const WeatherBackground = ({ condition }) => {
           >
             {/* Smooth Capsule Clouds */}
             {[
-              { top: '15%', left: '10%', width: '300px', height: '60px', opacity: 0.3, dur: 40 },
-              { top: '25%', left: '60%', width: '450px', height: '80px', opacity: 0.2, dur: 55 },
-              { top: '10%', left: '80%', width: '200px', height: '40px', opacity: 0.25, dur: 35 }
+              { top: '150px', left: '10%', width: '300px', height: '60px', opacity: 0.3, dur: 40 },
+              { top: '250px', left: '60%', width: '450px', height: '80px', opacity: 0.2, dur: 55 },
+              { top: '100px', left: '80%', width: '200px', height: '40px', opacity: 0.25, dur: 35 }
             ].map((cloud, i) => (
               <motion.div
                 key={`cloud-${i}`}
