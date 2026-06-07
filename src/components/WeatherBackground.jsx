@@ -131,7 +131,7 @@ const WeatherBackground = ({ condition }) => {
             {/* Core Sun */}
             <motion.div
               style={{
-                position: 'absolute', top: '140px', left: '30%',
+                position: 'absolute', top: '220px', left: '15%',
                 width: '120px', height: '120px', borderRadius: '50%',
                 background: 'white',
                 boxShadow: '0 0 100px 40px rgba(255, 255, 200, 0.8)',
@@ -143,13 +143,13 @@ const WeatherBackground = ({ condition }) => {
             {/* Large Atmospheric Lens Flare */}
             <motion.div
               style={{
-                position: 'absolute', top: '50px', left: '10%',
+                position: 'absolute', top: '150px', left: '5%',
                 width: '80vw', height: '80vw', maxWidth: '800px', maxHeight: '800px', borderRadius: '50%',
-                background: 'radial-gradient(circle, rgba(255, 235, 150, 0.3) 0%, rgba(255, 200, 100, 0.1) 40%, transparent 70%)',
+                background: 'radial-gradient(circle, rgba(255, 235, 150, 0.15) 0%, rgba(255, 200, 100, 0.05) 40%, transparent 70%)',
                 mixBlendMode: 'screen', filter: 'blur(40px)',
                 willChange: 'transform'
               }}
-              animate={{ scale: [1, 1.2, 1], opacity: [0.6, 0.8, 0.6] }}
+              animate={{ scale: [1, 1.2, 1], opacity: [0.4, 0.6, 0.4] }}
               transition={{ duration: 8, repeat: Infinity, ease: 'easeInOut' }}
             />
           </motion.div>
@@ -167,7 +167,7 @@ const WeatherBackground = ({ condition }) => {
             {/* Crisp Minimalist Moon */}
             <div
               style={{
-                position: 'absolute', top: '150px', right: '20%',
+                position: 'absolute', top: '220px', right: '15%',
                 width: '80px', height: '80px', borderRadius: '50%',
                 background: 'white',
                 boxShadow: '0 0 80px 20px rgba(255, 255, 255, 0.3), inset -15px -15px 20px rgba(0,0,0,0.1)'

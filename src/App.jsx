@@ -67,7 +67,7 @@ function App() {
     <div style={{ position: 'relative', minHeight: '100dvh', width: '100%', overflowX: 'hidden' }}>
       <WeatherBackground condition={weatherData?.condition || 'Clear'} />
       
-      <main style={{ position: 'relative', zIndex: 10, padding: '2rem 4%', maxWidth: '1600px', margin: '0 auto', display: 'flex', flexDirection: 'column', gap: '2rem' }}>
+      <main style={{ position: 'relative', zIndex: 10, padding: '1rem 4%', maxWidth: '1600px', margin: '0 auto', display: 'flex', flexDirection: 'column', gap: '1rem' }}>
         <SearchBar 
           onSearch={handleSearch} 
           onLocationSearch={handleLocationSearch} 
