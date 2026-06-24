@@ -66,7 +66,7 @@ const SearchBar = ({ onSearch, onLocationSearch, savedLocations = [] }) => {
   return (
     <div style={{ width: '100%', maxWidth: '400px', margin: '2rem auto 0 auto', position: 'relative', zIndex: 50 }}>
       <motion.div 
-        className="glass-card"
+        className="paper-card"
         initial={{ y: -50, opacity: 0 }}
         animate={{ y: 0, opacity: 1 }}
         transition={{ type: "spring", stiffness: 300, damping: 20 }}
@@ -78,7 +78,7 @@ const SearchBar = ({ onSearch, onLocationSearch, savedLocations = [] }) => {
         }}
       >
         <div onClick={handleSubmit} style={{ cursor: 'pointer', display: 'flex' }}>
-          <Search size={20} color={isFocused ? "#fff" : "rgba(255,255,255,0.6)"} style={{ transition: 'color 0.3s' }} />
+          <Search size={20} color={isFocused ? "var(--paper-text)" : "var(--paper-text-muted)"} style={{ transition: 'color 0.3s' }} />
         </div>
         
         <form onSubmit={handleSubmit} style={{ flex: 1, marginLeft: '0.75rem' }}>
@@ -97,7 +97,7 @@ const SearchBar = ({ onSearch, onLocationSearch, savedLocations = [] }) => {
               background: 'transparent',
               border: 'none',
               outline: 'none',
-              color: '#fff',
+              color: 'var(--paper-text)',
               fontSize: '1rem',
               fontFamily: 'inherit'
             }}
@@ -105,12 +105,12 @@ const SearchBar = ({ onSearch, onLocationSearch, savedLocations = [] }) => {
         </form>
         
         <div onClick={handleLocationClick} style={{ cursor: 'pointer', display: 'flex', marginLeft: '0.5rem' }}>
-          <MapPin size={20} color="rgba(255,255,255,0.6)" style={{ transition: 'color 0.3s' }} onMouseOver={(e) => e.target.style.color='#fff'} onMouseOut={(e) => e.target.style.color='rgba(255,255,255,0.6)'}/>
+          <MapPin size={20} color="var(--paper-text-muted)" style={{ transition: 'color 0.3s' }} onMouseOver={(e) => e.target.style.color='var(--paper-text)'} onMouseOut={(e) => e.target.style.color='var(--paper-text-muted)'}/>
         </div>
         
         <style>{`
           input::placeholder {
-            color: rgba(255,255,255,0.5);
+            color: var(--paper-text-muted);
           }
         `}</style>
       </motion.div>
@@ -122,7 +122,7 @@ const SearchBar = ({ onSearch, onLocationSearch, savedLocations = [] }) => {
             initial={{ opacity: 0, y: -10 }}
             animate={{ opacity: 1, y: 0 }}
             exit={{ opacity: 0, y: -10 }}
-            className="glass-card"
+            className="paper-card"
             style={{
               position: 'absolute',
               top: '100%',
@@ -159,10 +159,10 @@ const SearchBar = ({ onSearch, onLocationSearch, savedLocations = [] }) => {
                       alignItems: 'center',
                       gap: '0.75rem'
                     }}
-                    onMouseOver={(e) => e.currentTarget.style.background = 'rgba(255,255,255,0.1)'}
+                    onMouseOver={(e) => e.currentTarget.style.background = 'var(--paper-border)'}
                     onMouseOut={(e) => e.currentTarget.style.background = 'transparent'}
                   >
-                    <Bookmark size={16} fill="#FBBF24" color="#FBBF24" />
+                    <Bookmark size={16} fill="var(--paper-accent)" color="var(--paper-accent)" />
                     <span style={{ fontWeight: 500 }}>{loc}</span>
                   </div>
                 ))}
@@ -182,7 +182,7 @@ const SearchBar = ({ onSearch, onLocationSearch, savedLocations = [] }) => {
                     display: 'flex',
                     flexDirection: 'column'
                   }}
-                  onMouseOver={(e) => e.currentTarget.style.background = 'rgba(255,255,255,0.1)'}
+                  onMouseOver={(e) => e.currentTarget.style.background = 'var(--paper-border)'}
                   onMouseOut={(e) => e.currentTarget.style.background = 'transparent'}
                 >
                   <span style={{ fontWeight: 500 }}>{s.name}</span>

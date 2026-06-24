@@ -1,25 +1,39 @@
-@import url('https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&display=swap');
+@import url('https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600&family=Lora:ital,wght@0,400;0,500;0,600;0,700;1,400;1,500&display=swap');
 
 :root {
-  --glass-bg: rgba(255, 255, 255, 0.15);
-  --glass-border: rgba(255, 255, 255, 0.3);
-  --glass-blur: blur(20px);
-  --glass-shadow: 0 8px 32px 0 rgba(31, 38, 135, 0.2);
+  /* Default to Light / Day Mode (Paper) */
+  --paper-bg: #E6DECE;       /* Warmer aged paper base */
+  --paper-surface: #F4EFE1;  /* Warmer cream for tiles/cards */
+  --paper-text: #23272B;     /* Slightly darker ink */
+  --paper-text-muted: #6C757D;
+  --paper-border: rgba(0,0,0,0.08); /* Slightly more contrast for warmer bg */
+  --paper-shadow: 0 8px 30px rgba(0,0,0,0.04);
+  --paper-accent: #E63946;     /* Signature Stamp Red */
   
-  --text-primary: rgba(255, 255, 255, 1);
-  --text-secondary: rgba(255, 255, 255, 0.8);
-  --text-tertiary: rgba(255, 255, 255, 0.6);
-  
-  --font-family: 'Inter', system-ui, -apple-system, sans-serif;
+  /* Increased opacity to 0.08 and lowered frequency to 0.65 for a more visible, larger grain */
+  --paper-texture: url("data:image/svg+xml,%3Csvg viewBox='0 0 200 200' xmlns='http://www.w3.org/2000/svg'%3E%3Cfilter id='noiseFilter'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.65' numOctaves='3' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23noiseFilter)' opacity='0.08'/%3E%3C/svg%3E");
+
+  --font-family-base: 'Inter', system-ui, sans-serif;
+  --font-family-serif: 'Lora', serif;
+  --font-family-mono: 'Inter', system-ui, sans-serif;
 }
 
-/* System Dark Mode Overrides if needed, though we rely mostly on weather themes */
+.night-mode {
+  --paper-bg: #1C1917;         /* Warm slate/espresso black */
+  --paper-surface: #292524;    /* Slightly lighter warm surface */
+  --paper-text: #E6DED5;       /* Creamy ivory text */
+  --paper-text-muted: #8C867D; /* Warm muted grey */
+  --paper-border: rgba(230, 222, 213, 0.08);
+  --paper-shadow: 0 8px 30px rgba(0,0,0,0.5);
+  --paper-accent: #FF4D5E;     /* Keep the punchy red */
+  
+  /* Matched the light mode grain frequency but kept opacity low enough not to wash out the darks */
+  --paper-texture: url("data:image/svg+xml,%3Csvg viewBox='0 0 200 200' xmlns='http://www.w3.org/2000/svg'%3E%3Cfilter id='noiseFilter'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.65' numOctaves='3' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23noiseFilter)' opacity='0.06'/%3E%3C/svg%3E");
+}
+
+/* System Dark Mode Overrides if needed, but we rely on day/night logic */
 @media (prefers-color-scheme: dark) {
-  :root {
-    --glass-bg: rgba(0, 0, 0, 0.2);
-    --glass-border: rgba(255, 255, 255, 0.1);
-    --glass-shadow: 0 8px 32px 0 rgba(0, 0, 0, 0.3);
-  }
+  /* Keep empty as we manage via .night-mode class */
 }
 
 * {
@@ -29,13 +43,15 @@
 }
 
 body {
-  font-family: var(--font-family);
-  color: var(--text-primary);
-  background-color: #000; /* Fallback */
+  font-family: var(--font-family-base);
+  color: var(--paper-text);
+  background-color: var(--paper-bg);
+  background-image: var(--paper-texture);
   min-height: 100dvh;
   overflow-x: hidden;
   overscroll-behavior: none;
   -webkit-font-smoothing: antialiased;
+  transition: background-color 0.5s ease, color 0.5s ease;
 }
 
 #root {
@@ -44,67 +60,27 @@ body {
   flex-direction: column;
 }
 
-/* Glassmorphism Utilities */
-.glass-panel {
-  background: var(--glass-bg);
-  backdrop-filter: var(--glass-blur);
-  -webkit-backdrop-filter: var(--glass-blur);
-  border: 1px solid var(--glass-border);
-  border-radius: 9999px;
-  box-shadow: var(--glass-shadow);
+/* Paper UI Utilities */
+.paper-card {
+  background-color: var(--paper-surface);
+  background-image: var(--paper-texture);
+  border: 1px dashed var(--paper-border);
+  border-radius: 16px;
+  box-shadow: var(--paper-shadow);
+  transition: background-color 0.5s ease, border-color 0.5s ease, transform 0.2s ease, box-shadow 0.2s ease;
 }
 
-.glass-card {
-  background: var(--glass-bg);
-  backdrop-filter: var(--glass-blur);
-  -webkit-backdrop-filter: var(--glass-blur);
-  border: 1px solid var(--glass-border);
-  border-right-color: rgba(255,255,255,0.1);
-  border-bottom-color: rgba(255,255,255,0.1);
-  border-radius: 9999px;
-  box-shadow: var(--glass-shadow);
-  transition: transform 0.3s cubic-bezier(0.4, 0, 0.2, 1), 
-              box-shadow 0.3s cubic-bezier(0.4, 0, 0.2, 1),
-              background 0.3s ease;
+.paper-card:hover {
+  transform: translateY(-2px);
+  box-shadow: 0 12px 40px rgba(0, 0, 0, 0.08);
 }
 
-.glass-card:hover {
-  transform: translateY(-4px);
-  box-shadow: 0 12px 40px 0 rgba(31, 38, 135, 0.3);
-  background: rgba(255, 255, 255, 0.2);
-}
-
-/* Scrollbar Styling */
+/* Hide Scrollbar for a cleaner print aesthetic */
 ::-webkit-scrollbar {
-  width: 6px;
-  height: 6px;
+  display: none;
 }
-
-.pill-panel-forecast {
-  padding: 3rem 8rem;
-  overflow: hidden;
-  border-radius: 40px;
-}
-@media (max-width: 768px) {
-  .pill-panel-forecast {
-    padding: 5rem 10%;
-  }
-  .pill-panel-forecast > h3 {
-    margin-bottom: 0.5rem !important;
-  }
-}
-
-::-webkit-scrollbar-track {
-  background: transparent;
-}
-
-::-webkit-scrollbar-thumb {
-  background: rgba(255, 255, 255, 0.2);
-  border-radius: 10px;
-}
-
-::-webkit-scrollbar-thumb:hover {
-  background: rgba(255, 255, 255, 0.3);
+* {
+  scrollbar-width: none; /* Firefox */
 }
 
 /* Animations */
@@ -114,24 +90,105 @@ body {
   100% { transform: translateY(0px); }
 }
 
+.pill-panel-forecast {
+  padding: 2rem;
+  overflow: hidden;
+}
+@media (max-width: 768px) {
+  .pill-panel-forecast {
+    padding: 1.5rem;
+  }
+  .pill-panel-forecast > h3 {
+    margin-bottom: 0.5rem !important;
+  }
+}
+
 @keyframes pulse-glow {
   0% { opacity: 0.8; }
   50% { opacity: 1; }
   100% { opacity: 0.8; }
 }
 
+/* Dashboard Fold Layout */
+.top-fold {
+  display: flex;
+  flex-direction: column;
+  min-height: calc(100vh - 80px); /* Push metrics out of view */
+  justify-content: flex-start; /* Keep tiles grouped at the top */
+  gap: 1rem;
+}
+
+@media (max-width: 768px) {
+  .top-fold {
+    min-height: calc(100vh - 120px);
+    margin-top: 1rem; /* Bring the first 3 tiles down a bit as requested */
+  }
+}
+
 /* Metrics Grid */
 .metrics-grid {
   display: grid;
   grid-template-columns: repeat(2, 1fr);
+  grid-auto-rows: 1fr;
   gap: 1rem;
   width: 100%;
   margin: 0;
 }
 
-@media (min-width: 640px) {
+@media (min-width: 1024px) {
   .metrics-grid {
     grid-template-columns: repeat(3, 1fr);
+  }
+}
+
+/* Metric Card */
+.metric-card {
+  padding: 1rem 1.5rem;
+  gap: 0.5rem;
+  overflow: hidden;
+}
+
+.metric-label {
+  display: flex;
+  align-items: center;
+  gap: 0.4rem;
+  color: var(--paper-text-muted);
+  font-size: 0.7rem;
+  text-transform: uppercase;
+  letter-spacing: 0.1em;
+  font-weight: 600;
+  white-space: nowrap;
+}
+
+.metric-value {
+  font-size: 1.6rem;
+  font-weight: 700;
+  font-family: var(--font-family-mono);
+  color: var(--paper-text);
+  letter-spacing: -0.02em;
+  white-space: nowrap;
+}
+
+@media (max-width: 768px) {
+  .metric-card {
+    padding: 0.75rem 0.75rem;
+    gap: 0.35rem;
+  }
+  .metric-label {
+    font-size: 0.6rem;
+    gap: 0.25rem;
+  }
+  .metric-value {
+    font-size: 1.2rem;
+  }
+}
+
+@media (max-width: 480px) {
+  .metric-card {
+    padding: 0.6rem 0.5rem;
+  }
+  .metric-value {
+    font-size: 1rem;
   }
 }
 
@@ -152,18 +209,67 @@ body {
   width: 100%;
 }
 
+/* Dashboard Layout */
+.dashboard-layout {
+  display: flex;
+  flex-direction: column;
+  gap: 1.5rem;
+}
+
+/* Top Fold: fills the viewport on desktop, stacks naturally on mobile */
+.top-fold {
+  margin-top: 4rem;
+  min-height: calc(100vh - 180px);
+}
+
+/* Bottom Fold: spacing between sections */
+.bottom-fold {
+  margin-top: 4rem;
+}
+
+@media (max-width: 768px) {
+  .top-fold {
+    margin-top: 1rem;
+    min-height: auto;
+  }
+  .bottom-fold {
+    margin-top: 2rem;
+  }
+}
+
+@media (min-width: 1024px) {
+  .dashboard-layout {
+    display: grid;
+    grid-template-columns: 2.5fr 1fr;
+    grid-auto-rows: min-content;
+    align-items: start;
+  }
+  
+  .dashboard-main {
+    display: flex;
+    flex-direction: column;
+    gap: 1.5rem;
+  }
+  
+  .dashboard-sidebar {
+    display: flex;
+    flex-direction: column;
+    gap: 1.5rem;
+    position: sticky;
+    top: 1.5rem;
+  }
+}
+
 /* ═══════════════════════════════════════════════════════════════════════
    CUSTOM WEATHER MAP STYLES
    ═══════════════════════════════════════════════════════════════════════ */
 
 /* Container */
 .weather-map-container {
-  background: var(--glass-bg);
-  backdrop-filter: var(--glass-blur);
-  -webkit-backdrop-filter: var(--glass-blur);
-  border: 1px solid var(--glass-border);
-  border-radius: 40px;
-  box-shadow: var(--glass-shadow);
+  background: var(--paper-surface);
+  border: 1px solid var(--paper-border);
+  border-radius: 8px;
+  box-shadow: 0 1px 3px rgba(0, 0, 0, 0.05);
   padding: 1.5rem;
   width: 100%;
   margin: 0;
@@ -559,3 +665,49 @@ body {
   }
 }
 
+/* ═══════════════════════════════════════════════════════════════════════
+   MOBILE RESPONSIVE OVERRIDES
+   ═══════════════════════════════════════════════════════════════════════ */
+
+@media (max-width: 768px) {
+  /* Lifestyle Tips: 2-column grid instead of 3 */
+  .lifestyle-grid {
+    grid-template-columns: repeat(2, 1fr) !important;
+    row-gap: 1.5rem !important;
+    column-gap: 0.75rem !important;
+  }
+
+  /* Metrics: 2-column on mobile */
+  .metrics-grid {
+    grid-template-columns: repeat(2, 1fr) !important;
+    gap: 0.75rem !important;
+  }
+
+  /* Dashboard sections: tighter gap */
+  .dashboard-layout {
+    gap: 1rem !important;
+  }
+
+  .dashboard-main {
+    gap: 0.75rem !important;
+  }
+
+  /* Prevent card hover lift on touch devices */
+  .paper-card:hover {
+    transform: none;
+  }
+}
+
+@media (max-width: 480px) {
+  /* Very small screens: single column lifestyle */
+  .lifestyle-grid {
+    grid-template-columns: 1fr 1fr !important;
+    row-gap: 1.25rem !important;
+  }
+
+  /* Metrics: 2 col still works fine at this size */
+  .metrics-grid {
+    grid-template-columns: repeat(2, 1fr) !important;
+    gap: 0.5rem !important;
+  }
+}

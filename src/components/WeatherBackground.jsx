@@ -3,29 +3,31 @@ import { motion, AnimatePresence } from 'framer-motion';
 import Particles, { ParticlesProvider } from "@tsparticles/react";
 import { loadFull } from "tsparticles";
 
-const WeatherBackground = ({ condition }) => {
+const WeatherBackground = ({ condition, isNight }) => {
   const initParticles = async (engine) => {
     await loadFull(engine);
   };
 
-  // Modern minimalist gradient palettes
+  const particleColor = isNight ? '#FFFFFF' : '#1A1A1A';
+
+  // Subtle flat overlays
   const palettes = {
-    'Clear Day': 'linear-gradient(180deg, #1C7ED6 0%, #74C0FC 100%)',
-    'Clear Night': 'linear-gradient(180deg, #0B0F19 0%, #1A2A42 100%)',
-    'Rain': 'linear-gradient(180deg, #2B3A4A 0%, #4A5C6A 100%)',
-    'Thunderstorm': 'linear-gradient(180deg, #181923 0%, #2F3345 100%)',
-    'Snow': 'linear-gradient(180deg, #9BB0C1 0%, #D8E3E7 100%)',
-    'Fog': 'linear-gradient(180deg, #788A96 0%, #A9BCC8 100%)'
+    'Clear Day': 'rgba(28, 126, 214, 0.05)',
+    'Clear Night': 'rgba(255, 255, 255, 0.02)',
+    'Rain': 'rgba(74, 92, 106, 0.1)',
+    'Thunderstorm': 'rgba(47, 51, 69, 0.15)',
+    'Snow': 'rgba(216, 227, 231, 0.2)',
+    'Fog': 'rgba(169, 188, 200, 0.15)'
   };
 
-  const bgGradient = palettes[condition] || palettes['Clear Day'];
+  const bgOverlay = palettes[condition] || palettes['Clear Day'];
 
   const rainSvg = `data:image/svg+xml,${encodeURIComponent(
-    `<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 2 30'><rect width='2' height='30' fill='white' opacity='0.6' rx='1'/></svg>`
+    `<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 2 30'><rect width='2' height='30' fill='${particleColor}' opacity='0.3' rx='1'/></svg>`
   )}`;
 
   const starSvg = `data:image/svg+xml,${encodeURIComponent(
-    `<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 20 20'><circle cx='10' cy='10' r='4' fill='white'/><circle cx='10' cy='10' r='10' fill='white' opacity='0.2'/></svg>`
+    `<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 20 20'><circle cx='10' cy='10' r='4' fill='${particleColor}'/><circle cx='10' cy='10' r='10' fill='${particleColor}' opacity='0.2'/></svg>`
   )}`;
 
   // Particles config
@@ -35,17 +37,17 @@ const WeatherBackground = ({ condition }) => {
         fullScreen: { enable: false },
         fpsLimit: 60,
         particles: {
-          number: { value: 150, density: { enable: true, area: 800 } },
+          number: { value: 60, density: { enable: true, area: 800 } },
           shape: {
             type: "image",
             options: { image: { src: starSvg, width: 20, height: 20 } }
           },
           opacity: {
-            value: { min: 0.1, max: 1 },
-            animation: { enable: true, speed: 0.5, sync: false }
+            value: { min: 0.05, max: 0.3 },
+            animation: { enable: true, speed: 0.2, sync: false }
           },
           size: { value: { min: 2, max: 4 } },
-          move: { enable: true, speed: 0.2, direction: "none", outModes: { default: "out" } }
+          move: { enable: true, speed: 0.1, direction: "none", outModes: { default: "out" } }
         },
         detectRetina: true
       };
@@ -56,12 +58,12 @@ const WeatherBackground = ({ condition }) => {
         fullScreen: { enable: false },
         fpsLimit: 60,
         particles: {
-          number: { value: 150, density: { enable: true, area: 800 } },
-          color: { value: "#ffffff" },
+          number: { value: 80, density: { enable: true, area: 800 } },
+          color: { value: particleColor },
           shape: { type: "circle" },
-          opacity: { value: { min: 0.3, max: 0.8 } },
-          size: { value: { min: 1, max: 4 } },
-          move: { enable: true, speed: 1.5, direction: "bottom", straight: false, outModes: { default: "out" } },
+          opacity: { value: { min: 0.1, max: 0.4 } },
+          size: { value: { min: 1, max: 3 } },
+          move: { enable: true, speed: 1, direction: "bottom", straight: false, outModes: { default: "out" } },
           wobble: { enable: true, distance: 10, speed: 10 }
         },
         detectRetina: true
@@ -69,16 +71,15 @@ const WeatherBackground = ({ condition }) => {
     }
 
     if (condition === 'Rain') {
-      // Gentle rain
       return {
         fullScreen: { enable: false },
         fpsLimit: 60,
         particles: {
-          number: { value: 80, density: { enable: true, area: 800 } },
+          number: { value: 60, density: { enable: true, area: 800 } },
           shape: { type: "image", options: { image: { src: rainSvg, width: 2, height: 30 } } },
-          opacity: { value: { min: 0.2, max: 0.5 } },
+          opacity: { value: { min: 0.1, max: 0.3 } },
           size: { value: { min: 1, max: 1.5 } },
-          move: { enable: true, speed: 18, direction: "bottom", straight: true, outModes: { default: "out" } },
+          move: { enable: true, speed: 12, direction: "bottom", straight: true, outModes: { default: "out" } },
           rotate: { value: 10, direction: "clockwise", animation: { enable: false } }
         },
         detectRetina: true
@@ -86,16 +87,15 @@ const WeatherBackground = ({ condition }) => {
     }
 
     if (condition === 'Thunderstorm') {
-      // Heavy rain
       return {
         fullScreen: { enable: false },
         fpsLimit: 60,
         particles: {
-          number: { value: 200, density: { enable: true, area: 800 } },
+          number: { value: 120, density: { enable: true, area: 800 } },
           shape: { type: "image", options: { image: { src: rainSvg, width: 2, height: 30 } } },
-          opacity: { value: { min: 0.4, max: 0.8 } },
-          size: { value: { min: 1, max: 2.5 } },
-          move: { enable: true, speed: 28, direction: "bottom", straight: true, outModes: { default: "out" } },
+          opacity: { value: { min: 0.2, max: 0.5 } },
+          size: { value: { min: 1, max: 2 } },
+          move: { enable: true, speed: 20, direction: "bottom", straight: true, outModes: { default: "out" } },
           rotate: { value: 15, direction: "clockwise", animation: { enable: false } }
         },
         detectRetina: true
@@ -103,94 +103,75 @@ const WeatherBackground = ({ condition }) => {
     }
 
     return { fullScreen: { enable: false }, particles: { number: { value: 0 } } };
-  }, [condition, rainSvg, starSvg]);
+  }, [condition, rainSvg, starSvg, particleColor]);
 
   return (
     <div 
       style={{ 
         position: 'fixed', 
-        top: '-100px', left: '-100px', right: '-100px', bottom: '-100px',
-        zIndex: -3, // Base gradient is the deepest layer
+        top: '0', left: '0', right: '0', bottom: '0',
+        zIndex: 0,
         overflow: 'hidden',
-        background: bgGradient,
-        transition: 'background 2s ease-in-out',
-        transform: 'translateZ(0)'
+        background: bgOverlay,
+        transition: 'background 1s ease-in-out',
+        pointerEvents: 'none'
       }}
     >
       <AnimatePresence mode="wait">
-        {/* Layer 2: Celestial Bodies (Sun / Moon) */}
         {condition === 'Clear Day' && (
           <motion.div
-            key="sun-lens-flare"
+            key="flat-sun"
             initial={{ opacity: 0, scale: 0.8 }}
             animate={{ opacity: 1, scale: 1 }}
             exit={{ opacity: 0, scale: 0.8 }}
             transition={{ duration: 1.5, ease: "easeInOut" }}
             style={{ position: 'absolute', inset: 0, zIndex: -2 }}
           >
-            {/* Core Sun */}
-            <motion.div
+            <div
               style={{
-                position: 'absolute', top: '220px', left: '15%',
+                position: 'absolute', top: '15%', left: '15%',
                 width: '120px', height: '120px', borderRadius: '50%',
-                background: 'white',
-                boxShadow: '0 0 100px 40px rgba(255, 255, 200, 0.8)',
-                willChange: 'transform'
+                background: 'rgba(245, 158, 11, 0.1)',
+                border: '1px solid rgba(245, 158, 11, 0.3)'
               }}
-              animate={{ scale: [1, 1.05, 1], opacity: [0.9, 1, 0.9] }}
-              transition={{ duration: 4, repeat: Infinity, ease: 'easeInOut' }}
-            />
-            {/* Large Atmospheric Lens Flare */}
-            <motion.div
-              style={{
-                position: 'absolute', top: '150px', left: '5%',
-                width: '80vw', height: '80vw', maxWidth: '800px', maxHeight: '800px', borderRadius: '50%',
-                background: 'radial-gradient(circle, rgba(255, 235, 150, 0.15) 0%, rgba(255, 200, 100, 0.05) 40%, transparent 70%)',
-                mixBlendMode: 'screen', filter: 'blur(40px)',
-                willChange: 'transform'
-              }}
-              animate={{ scale: [1, 1.2, 1], opacity: [0.4, 0.6, 0.4] }}
-              transition={{ duration: 8, repeat: Infinity, ease: 'easeInOut' }}
             />
           </motion.div>
         )}
 
         {condition === 'Clear Night' && (
           <motion.div
-            key="moon"
+            key="flat-moon"
             initial={{ opacity: 0, y: 50 }}
             animate={{ opacity: 1, y: 0 }}
             exit={{ opacity: 0, y: 50 }}
             transition={{ duration: 1.5, ease: "easeOut" }}
             style={{ position: 'absolute', inset: 0, zIndex: -2 }}
           >
-            {/* Crisp Minimalist Moon */}
             <div
               style={{
-                position: 'absolute', top: '220px', right: '15%',
+                position: 'absolute', top: '15%', right: '15%',
                 width: '80px', height: '80px', borderRadius: '50%',
-                background: 'white',
-                boxShadow: '0 0 80px 20px rgba(255, 255, 255, 0.3), inset -15px -15px 20px rgba(0,0,0,0.1)'
+                background: 'transparent',
+                border: `2px solid ${particleColor}`,
+                opacity: 0.15
               }}
             />
           </motion.div>
         )}
 
-        {/* Layer 3: Minimalist Sky Elements (Clouds / Fog) */}
         {['Clear Day', 'Rain', 'Thunderstorm', 'Snow'].includes(condition) && (
           <motion.div
-            key="clouds"
+            key="flat-clouds"
             initial={{ opacity: 0 }}
             animate={{ opacity: 1 }}
             exit={{ opacity: 0 }}
             transition={{ duration: 1.5 }}
             style={{ position: 'absolute', inset: 0, zIndex: -1 }}
           >
-            {/* Smooth Capsule Clouds */}
             {[
-              { top: '150px', left: '10%', width: '300px', height: '60px', opacity: 0.3, dur: 40 },
-              { top: '250px', left: '60%', width: '450px', height: '80px', opacity: 0.2, dur: 55 },
-              { top: '100px', left: '80%', width: '200px', height: '40px', opacity: 0.25, dur: 35 }
+              { top: '10%', left: '10%', width: '300px', height: '60px', opacity: 0.05, dur: 60 },
+              { top: '25%', left: '60%', width: '450px', height: '80px', opacity: 0.03, dur: 80 },
+              { top: '15%', left: '80%', width: '200px', height: '40px', opacity: 0.04, dur: 50 }
             ].map((cloud, i) => (
               <motion.div
                 key={`cloud-${i}`}
@@ -198,9 +179,8 @@ const WeatherBackground = ({ condition }) => {
                   position: 'absolute',
                   top: cloud.top, left: cloud.left,
                   width: cloud.width, height: cloud.height,
-                  borderRadius: '100px', // Creates the sleek capsule shape
-                  background: 'white',
-                  filter: 'blur(8px)',
+                  borderRadius: '100px',
+                  background: particleColor,
                   opacity: cloud.opacity
                 }}
                 animate={{ x: ['-20%', '100%'] }}
@@ -212,48 +192,38 @@ const WeatherBackground = ({ condition }) => {
 
         {condition === 'Fog' && (
           <motion.div
-            key="fog"
+            key="flat-fog"
             initial={{ opacity: 0 }}
             animate={{ opacity: 1 }}
             exit={{ opacity: 0 }}
             transition={{ duration: 2 }}
             style={{ position: 'absolute', inset: 0, zIndex: -1 }}
           >
-            {/* Fog Banks */}
-            {[
-              { top: '40%', height: '60%', blur: '60px', dur: 20 },
-              { top: '60%', height: '40%', blur: '40px', dur: 15 }
-            ].map((bank, i) => (
-              <motion.div
-                key={`fog-${i}`}
-                style={{
-                  position: 'absolute', top: bank.top, left: '-20%', right: '-20%', height: bank.height,
-                  background: 'white', opacity: 0.15, filter: `blur(${bank.blur})`, borderRadius: '50%'
-                }}
-                animate={{ x: ['-5%', '5%', '-5%'] }}
-                transition={{ duration: bank.dur, repeat: Infinity, ease: 'easeInOut' }}
-              />
-            ))}
+            <div
+              style={{
+                position: 'absolute', top: '40%', left: '-20%', right: '-20%', height: '60%',
+                background: particleColor, opacity: 0.05, filter: 'blur(10px)'
+              }}
+            />
           </motion.div>
         )}
       </AnimatePresence>
 
-      {/* Layer 4: tsparticles Canvas (Physics Engine) sits right below the UI */}
       <ParticlesProvider init={initParticles}>
         <Particles
+          key={condition}
           id="tsparticles"
           options={particlesOptions}
           style={{ position: 'absolute', inset: 0, width: '100%', height: '100%', zIndex: 0 }}
         />
       </ParticlesProvider>
 
-      {/* Thunderstorm Lightning Flashes */}
       {condition === 'Thunderstorm' && (
         <div
           style={{
             position: 'absolute', inset: 0,
-            backgroundColor: 'white', mixBlendMode: 'overlay',
-            pointerEvents: 'none', zIndex: 10, // Renders over everything
+            backgroundColor: particleColor,
+            pointerEvents: 'none', zIndex: 10,
             animation: 'lightning-flash 6s infinite linear'
           }}
         />
@@ -263,9 +233,9 @@ const WeatherBackground = ({ condition }) => {
         @keyframes lightning-flash {
           0%, 100% { opacity: 0; }
           90% { opacity: 0; }
-          92% { opacity: 0.8; }
-          93% { opacity: 0.1; }
-          94% { opacity: 0.9; }
+          92% { opacity: 0.3; }
+          93% { opacity: 0.05; }
+          94% { opacity: 0.4; }
           96% { opacity: 0; }
         }
       `}</style>

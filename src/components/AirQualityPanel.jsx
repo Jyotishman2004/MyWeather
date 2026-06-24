@@ -36,17 +36,15 @@ const AirQualityPanel = ({ airQuality }) => {
 
   return (
     <motion.div 
-      className="glass-card"
+      className="paper-card metric-card"
       style={{
-        padding: '1.25rem 2rem',
         width: '100%',
         height: '100%',
         margin: '0',
         display: 'flex',
         flexDirection: 'column',
         justifyContent: 'center',
-        gap: '0.75rem',
-        borderTop: `2px solid ${color}40`
+        gap: '0.5rem',
       }}
     >
       <div style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center' }}>
@@ -61,7 +59,7 @@ const AirQualityPanel = ({ airQuality }) => {
         </div>
       </div>
 
-      <div style={{ position: 'relative', height: '4px', background: 'rgba(255,255,255,0.1)', borderRadius: '2px', overflow: 'hidden' }}>
+      <div style={{ position: 'relative', height: '4px', background: 'var(--paper-border)', borderRadius: '2px', overflow: 'hidden' }}>
         <div style={{ 
           height: '100%', 
           background: 'linear-gradient(90deg, #4CAF50 0%, #4CAF50 16.66%, #FFEB3B 33.33%, #FF9800 50%, #F44336 66.66%, #9C27B0 83.33%, #B71C1C 100%)',

@@ -4,18 +4,18 @@ import { Sun, Moon, Cloud, CloudRain, CloudSun, CloudMoon, CloudSunRain, CloudMo
 
 const getIcon = (iconName) => {
   switch (iconName) {
-    case 'sun': return <Sun size={36} color="#FFD54F" />;
-    case 'moon': return <Moon size={36} color="#B39DDB" />;
-    case 'cloud': return <Cloud size={36} color="#E0E0E0" />;
-    case 'cloud-sun': return <CloudSun size={36} color="#FFB74D" />;
-    case 'cloud-moon': return <CloudMoon size={36} color="#B39DDB" />;
-    case 'cloud-rain': return <CloudRain size={36} color="#64B5F6" />;
-    case 'cloud-sun-rain': return <CloudSunRain size={36} color="#64B5F6" />;
-    case 'cloud-moon-rain': return <CloudMoonRain size={36} color="#64B5F6" />;
-    case 'cloud-lightning': return <CloudLightning size={36} color="#9575CD" />;
-    case 'snowflake': return <Snowflake size={36} color="#90CAF9" />;
-    case 'wind': return <Wind size={36} color="#B0BEC5" />;
-    default: return <Sun size={36} color="#FFD54F" />;
+    case 'sun': return <Sun size={24} color="#FFD54F" />;
+    case 'moon': return <Moon size={24} color="#B39DDB" />;
+    case 'cloud': return <Cloud size={24} color="#E0E0E0" />;
+    case 'cloud-sun': return <CloudSun size={24} color="#FFB74D" />;
+    case 'cloud-moon': return <CloudMoon size={24} color="#B39DDB" />;
+    case 'cloud-rain': return <CloudRain size={24} color="#64B5F6" />;
+    case 'cloud-sun-rain': return <CloudSunRain size={24} color="#64B5F6" />;
+    case 'cloud-moon-rain': return <CloudMoonRain size={24} color="#64B5F6" />;
+    case 'cloud-lightning': return <CloudLightning size={24} color="#9575CD" />;
+    case 'snowflake': return <Snowflake size={24} color="#90CAF9" />;
+    case 'wind': return <Wind size={24} color="#B0BEC5" />;
+    default: return <Sun size={24} color="#FFD54F" />;
   }
 };
 
@@ -27,7 +27,7 @@ const HourlyForecast = ({ hourly }) => {
       transition={{ delay: 0.4, duration: 0.6 }}
       style={{ width: '100%' }}
     >
-      <div className="glass-panel hourly-panel" style={{ overflow: 'hidden', width: '100%' }}>
+      <div className="paper-card hourly-panel" style={{ overflow: 'hidden', width: '100%' }}>
         <h3 style={{ fontSize: '0.9rem', fontWeight: 500, marginBottom: '0.75rem', opacity: 0.8, textAlign: 'center' }}>Hourly Forecast</h3>
         <div 
           className="hourly-scroll"
@@ -55,18 +55,18 @@ const HourlyForecast = ({ hourly }) => {
                 padding: '0.25rem 0',
               }}
             >
-              <span style={{ fontSize: '0.85rem', opacity: 0.7 }}>{hour.time}</span>
-              <div style={{ padding: '0.35rem', background: 'rgba(255,255,255,0.05)', borderRadius: '50%' }}>
+              <span style={{ fontSize: '0.85rem', opacity: 0.7, fontFamily: 'var(--font-family-mono)' }}>{hour.time}</span>
+              <div style={{ padding: '0.35rem', background: 'var(--paper-border)', borderRadius: '50%' }}>
                 {getIcon(hour.icon)}
               </div>
-              <span style={{ fontSize: '1rem', fontWeight: 500 }}>{hour.temp}&deg;</span>
+              <span style={{ fontSize: '1rem', fontWeight: 500, fontFamily: 'var(--font-family-mono)' }}>{hour.temp}&deg;</span>
             </motion.div>
           ))}
         </div>
       </div>
       <style>{`
         .hourly-panel {
-          padding: 1.25rem 4rem;
+          padding: 0.75rem 2rem;
         }
         .hourly-scroll {
           justify-content: space-around;

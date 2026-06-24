@@ -59,9 +59,8 @@ const HeroWeather = ({ data, isSaved, onToggleSave }) => {
         alignItems: 'center',
         justifyContent: 'center',
         textAlign: 'center',
-        padding: '1rem 1rem 1.5rem',
-        marginTop: '0.5rem',
-        textShadow: '0 2px 10px rgba(0,0,0,0.4)'
+        padding: '0.5rem',
+        marginTop: '0'
       }}
     >
       <motion.div 
@@ -70,7 +69,7 @@ const HeroWeather = ({ data, isSaved, onToggleSave }) => {
         transition={{ delay: 0.2 }}
         style={{ display: 'flex', alignItems: 'center', gap: '0.5rem', marginBottom: '0.5rem' }}
       >
-        <h2 style={{ fontSize: '1.5rem', fontWeight: 400, opacity: 0.9, margin: 0 }}>
+        <h2 style={{ fontSize: 'clamp(1.75rem, 8vw, 3.5rem)', fontWeight: 600, margin: 0, fontFamily: 'var(--font-family-serif)', letterSpacing: '-0.02em' }}>
           {data.location}
         </h2>
         <button 
@@ -83,13 +82,13 @@ const HeroWeather = ({ data, isSaved, onToggleSave }) => {
             display: 'flex',
             alignItems: 'center',
             padding: '4px',
-            color: isSaved ? '#FBBF24' : 'rgba(255,255,255,0.4)',
+            color: isSaved ? 'var(--paper-accent)' : 'var(--paper-text-muted)',
             transition: 'color 0.2s',
           }}
-          onMouseOver={(e) => { if(!isSaved) e.currentTarget.style.color = 'rgba(255,255,255,0.8)' }}
-          onMouseOut={(e) => { if(!isSaved) e.currentTarget.style.color = 'rgba(255,255,255,0.4)' }}
+          onMouseOver={(e) => { if(!isSaved) e.currentTarget.style.color = 'var(--paper-text)' }}
+          onMouseOut={(e) => { if(!isSaved) e.currentTarget.style.color = 'var(--paper-text-muted)' }}
         >
-          <Bookmark size={20} fill={isSaved ? '#FBBF24' : 'none'} />
+          <Bookmark size={20} fill={isSaved ? 'var(--paper-accent)' : 'none'} />
         </button>
       </motion.div>
       
@@ -98,11 +97,12 @@ const HeroWeather = ({ data, isSaved, onToggleSave }) => {
         animate={{ opacity: 1, y: 0 }}
         transition={{ delay: 0.3 }}
         style={{ 
-          fontSize: 'clamp(6rem, 15vw, 10rem)', 
-          fontWeight: 200, 
+          fontSize: 'clamp(5rem, 12vw, 8rem)', 
+          fontWeight: 700, 
+          margin: 0, 
           lineHeight: 1, 
-          letterSpacing: '-0.05em',
-          textShadow: '0 4px 20px rgba(0,0,0,0.5), 0 10px 40px rgba(0,0,0,0.3)'
+          fontFamily: 'var(--font-family-serif)', 
+          letterSpacing: '-0.05em'
         }}
       >
         {data.temperature}&deg;
@@ -113,12 +113,15 @@ const HeroWeather = ({ data, isSaved, onToggleSave }) => {
         animate={{ opacity: 1, y: 0 }}
         transition={{ delay: 0.4 }}
         style={{ 
-          fontSize: '1.25rem', 
-          fontWeight: 500,
+          fontSize: '0.85rem', 
+          fontWeight: 600,
           marginTop: '0.5rem',
           display: 'flex',
           gap: '1rem',
-          alignItems: 'center'
+          alignItems: 'center',
+          textTransform: 'uppercase',
+          letterSpacing: '0.1em',
+          color: 'var(--paper-text-muted)'
         }}
       >
         <span>{data.condition}</span>
@@ -132,9 +135,9 @@ const HeroWeather = ({ data, isSaved, onToggleSave }) => {
         transition={{ delay: 0.45 }}
         style={{
           marginTop: '0.5rem',
-          fontSize: '1rem',
-          opacity: 0.8,
-          fontWeight: 400
+          fontSize: '0.85rem',
+          color: 'var(--paper-text-muted)',
+          fontWeight: 500
         }}
       >
         Feels like {data.feelsLike}&deg;
@@ -161,10 +164,10 @@ const HeroWeather = ({ data, isSaved, onToggleSave }) => {
         style={{
           marginTop: '1.5rem',
           padding: '0.5rem 1.25rem',
-          background: 'rgba(0, 0, 0, 0.15)',
+          background: 'var(--paper-border)',
           borderRadius: '9999px',
           backdropFilter: 'blur(10px)',
-          border: '1px solid rgba(255,255,255,0.1)',
+          border: '1px solid var(--paper-border)',
           display: 'flex',
           alignItems: 'center',
           gap: '0.5rem',

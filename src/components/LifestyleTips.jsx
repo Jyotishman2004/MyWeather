@@ -115,30 +115,29 @@ const LifestyleTips = ({ weatherData }) => {
     }
   ];
 
-  // Sort by score descending and strictly take the top 9 most important tips to perfectly fill a 3x3 grid!
-  const tips = allTips.sort((a, b) => b.score - a.score).slice(0, 9);
+  // Sort by score descending and take top 8 for a clean grid on all screen sizes
+  const tips = allTips.sort((a, b) => b.score - a.score).slice(0, 8);
 
   return (
     <motion.div 
-      className="glass-panel"
+      className="paper-card"
       initial={{ opacity: 0, y: 30 }}
       animate={{ opacity: 1, y: 0 }}
       transition={{ delay: 1.0, duration: 0.6 }}
       style={{
-        padding: '2rem 3rem',
+        padding: '1.5rem',
         width: '100%',
-        margin: '2rem 0',
-        borderRadius: '40px'
+        margin: '0'
       }}
     >
-      <div style={{ display: 'flex', justifyContent: 'center', alignItems: 'center', marginBottom: '2rem', paddingBottom: '1rem', borderBottom: '1px solid rgba(255,255,255,0.1)' }}>
+      <div style={{ display: 'flex', justifyContent: 'center', alignItems: 'center', marginBottom: '2rem', paddingBottom: '1rem', borderBottom: '1px solid var(--paper-border)' }}>
         <h3 style={{ fontSize: '1.1rem', fontWeight: 500, opacity: 0.9 }}>Smart Lifestyle Tips</h3>
       </div>
       
-      <div style={{
+      <div className="lifestyle-grid" style={{
         display: 'grid',
         gridTemplateColumns: 'repeat(3, 1fr)',
-        rowGap: '2.5rem',
+        rowGap: '2rem',
         columnGap: '1rem',
         textAlign: 'center'
       }}>

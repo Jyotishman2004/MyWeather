@@ -38,21 +38,24 @@ const Forecast = ({ daily }) => {
         flexDirection: 'column',
         gap: '2rem',
         width: '100%',
-        margin: '0'
+        margin: '0',
+        height: '100%'
       }}
     >
       {/* Multi-Day Forecast */}
-      <div className="glass-panel pill-panel-forecast">
+      <div className="paper-card pill-panel-forecast" style={{ flex: 1, display: 'flex', flexDirection: 'column', justifyContent: 'center' }}>
         <h3 style={{ fontSize: '1rem', fontWeight: 500, marginBottom: '1.5rem', opacity: 0.8, textAlign: 'center' }}>Multi-Day Forecast</h3>
         <div style={{ 
           display: 'flex', 
           flexDirection: 'column', 
-          gap: '1rem'
+          gap: '1rem',
+          flex: 1,
+          justifyContent: 'space-around'
         }}>
           {visibleDays.map((day, idx) => (
             <motion.div 
               key={idx}
-              whileHover={{ scale: 1.02, backgroundColor: 'rgba(255,255,255,0.1)' }}
+              whileHover={{ scale: 1.02, backgroundColor: 'var(--paper-border)' }}
               style={{
                 display: 'flex',
                 alignItems: 'center',
@@ -71,7 +74,7 @@ const Forecast = ({ daily }) => {
                 )}
               </div>
               
-              <div style={{ display: 'flex', alignItems: 'center', gap: '0.4rem', width: '90px', justifyContent: 'flex-end' }}>
+              <div style={{ display: 'flex', alignItems: 'center', gap: '0.4rem', width: '90px', justifyContent: 'flex-end', fontFamily: 'var(--font-family-mono)' }}>
                 <span style={{ color: '#90CAF9', opacity: 0.9 }}>{day.low}&deg;</span>
                 <span style={{ opacity: 0.3, fontSize: '0.9rem' }}>/</span>
                 <span style={{ color: '#FFB74D', fontWeight: 600 }}>{day.high}&deg;</span>
@@ -89,7 +92,7 @@ const Forecast = ({ daily }) => {
                 marginTop: '0.5rem',
                 cursor: 'pointer',
                 borderRadius: '12px',
-                background: 'rgba(255,255,255,0.05)',
+                background: 'var(--paper-border)',
                 fontSize: '0.9rem',
                 fontWeight: 500,
                 opacity: 0.8,

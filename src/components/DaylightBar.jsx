@@ -38,7 +38,7 @@ const DaylightBar = ({ sunrise, sunset, sunriseTime, sunsetTime, currentTime, co
 
   return (
     <motion.div 
-      className="glass-card"
+      className="paper-card"
       initial={{ opacity: 0, y: 20 }}
       animate={{ opacity: 1, y: 0 }}
       transition={{ delay: 0.6 }}
@@ -51,7 +51,7 @@ const DaylightBar = ({ sunrise, sunset, sunriseTime, sunsetTime, currentTime, co
         gap: '1.25rem'
       }}
     >
-      <div style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center', opacity: 0.8, fontSize: '0.9rem' }}>
+      <div style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center', opacity: 0.8, fontSize: '0.9rem', fontFamily: 'var(--font-family-mono)' }}>
         <div style={{ display: 'flex', alignItems: 'center', gap: '0.5rem' }}>
           <Sunrise size={18} color="#FFB74D" />
           <span>{sunrise}</span>
@@ -68,7 +68,7 @@ const DaylightBar = ({ sunrise, sunset, sunriseTime, sunsetTime, currentTime, co
           position: 'absolute', 
           width: '100%', 
           height: '4px', 
-          background: 'rgba(255,255,255,0.1)', 
+          background: 'var(--paper-border)', 
           borderRadius: '2px',
           overflow: 'hidden'
         }}>
@@ -102,7 +102,7 @@ const DaylightBar = ({ sunrise, sunset, sunriseTime, sunsetTime, currentTime, co
         </motion.div>
       </div>
       
-      <div style={{ textAlign: 'center', fontSize: '0.8rem', opacity: 0.6, marginTop: '-0.5rem' }}>
+      <div style={{ textAlign: 'center', fontSize: '0.8rem', opacity: 0.6, marginTop: '-0.5rem', fontFamily: 'var(--font-family-mono)' }}>
         {remainingText}
       </div>
     </motion.div>

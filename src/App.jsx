@@ -63,14 +63,18 @@ function App() {
     }
   };
 
+  const isNight = weatherData ?
+    (weatherData.condition.includes('Night') || weatherData.currentTime < weatherData.sunriseTime || weatherData.currentTime > weatherData.sunsetTime)
+    : false;
+
   return (
-    <div style={{ position: 'relative', minHeight: '100dvh', width: '100%', overflowX: 'hidden' }}>
-      <WeatherBackground condition={weatherData?.condition || 'Clear'} />
-      
-      <main style={{ position: 'relative', zIndex: 10, padding: '1rem 4%', maxWidth: '1600px', margin: '0 auto', display: 'flex', flexDirection: 'column', gap: '1rem' }}>
-        <SearchBar 
-          onSearch={handleSearch} 
-          onLocationSearch={handleLocationSearch} 
+    <div className={isNight ? 'night-mode' : ''} style={{ position: 'relative', minHeight: '100dvh', width: '100%', overflowX: 'hidden', backgroundColor: 'var(--paper-bg)', color: 'var(--paper-text)', transition: 'background-color 0.5s ease, color 0.5s ease' }}>
+      <WeatherBackground condition={weatherData?.condition || 'Clear'} isNight={isNight} />
+
+      <main style={{ position: 'relative', zIndex: 10, padding: '1rem 4%', maxWidth: '1600px', margin: '0 auto', display: 'flex', flexDirection: 'column', gap: '0.75rem' }}>
+        <SearchBar
+          onSearch={handleSearch}
+          onLocationSearch={handleLocationSearch}
           savedLocations={savedLocations}
         />
 
@@ -97,8 +101,8 @@ function App() {
             `}</style>
           </div>
         ) : !weatherData ? (
-          <div style={{ display: 'flex', flexDirection: 'column', alignItems: 'center', justifyContent: 'center', height: '60vh', color: 'white', textAlign: 'center' }}>
-            <div style={{ background: 'rgba(255,255,255,0.1)', padding: '3rem', borderRadius: '24px', backdropFilter: 'blur(10px)', border: '1px solid rgba(255,255,255,0.2)', maxWidth: '500px' }}>
+          <div style={{ display: 'flex', flexDirection: 'column', alignItems: 'center', justifyContent: 'center', height: '60vh', textAlign: 'center' }}>
+            <div className="paper-card" style={{ padding: '3rem', maxWidth: '500px' }}>
               <h2 style={{ fontSize: '2rem', marginBottom: '1rem', fontWeight: '600' }}>Welcome to WeatherApp</h2>
               <p style={{ opacity: 0.8, fontSize: '1.1rem', lineHeight: '1.5' }}>
                 Enter a city name above or click the location icon to check the current weather and forecasts for your area.
@@ -106,21 +110,32 @@ function App() {
             </div>
           </div>
         ) : (
-          <>
-            <div className="top-section">
-              <div className="hero-container">
-                <HeroWeather 
-                  data={weatherData} 
-                  isSaved={savedLocations.includes(weatherData.location)}
-                  onToggleSave={() => toggleSaveLocation(weatherData.location)}
-                />
+          <div style={{ display: 'flex', flexDirection: 'column' }}>
+            {/* Top Fold: Hero, Hourly, Multi-day Forecast */}
+            <div className="dashboard-layout top-fold">
+              <div className="dashboard-main" style={{ display: 'flex', flexDirection: 'column', gap: '0.75rem', height: '100%' }}>
+                <div className="paper-card" style={{ flex: 1, padding: '1rem', display: 'flex', justifyContent: 'center', alignItems: 'center' }}>
+                  <HeroWeather
+                    data={weatherData}
+                    isSaved={savedLocations.includes(weatherData.location)}
+                    onToggleSave={() => toggleSaveLocation(weatherData.location)}
+                  />
+                </div>
+                <HourlyForecast hourly={weatherData.hourly} />
               </div>
 
-              <HourlyForecast hourly={weatherData.hourly} />
-              
-              <div className="metrics-container">
-                <WeatherMetrics 
-                  metrics={weatherData.metrics} 
+              <div className="dashboard-sidebar" style={{ display: 'flex', flexDirection: 'column', height: '100%' }}>
+                <div style={{ flex: 1, display: 'flex' }}>
+                  <Forecast daily={weatherData.daily} />
+                </div>
+              </div>
+            </div>
+
+            {/* Bottom Fold: Metrics, Map, Daylight, Lifestyle */}
+            <div className="dashboard-layout bottom-fold">
+              <div className="dashboard-main" style={{ display: 'flex', flexDirection: 'column', gap: '1rem' }}>
+                <WeatherMetrics
+                  metrics={weatherData.metrics}
                   sunrise={weatherData.sunrise}
                   sunset={weatherData.sunset}
                   sunriseTime={weatherData.sunriseTime}
@@ -129,28 +144,29 @@ function App() {
                   condition={weatherData.condition}
                   airQuality={weatherData.airQuality}
                 />
+
+                <DaylightBar
+                  sunrise={weatherData.sunrise}
+                  sunset={weatherData.sunset}
+                  sunriseTime={weatherData.sunriseTime}
+                  sunsetTime={weatherData.sunsetTime}
+                  currentTime={weatherData.currentTime}
+                  condition={weatherData.condition}
+                />
+
+                <WeatherMap
+                  lat={weatherData.lat}
+                  lon={weatherData.lon}
+                  onLocationClick={handleLocationSearch}
+                  locationName={weatherData.location}
+                />
+              </div>
+
+              <div className="dashboard-sidebar">
+                <LifestyleTips weatherData={weatherData} />
               </div>
             </div>
-
-            <DaylightBar 
-              sunrise={weatherData.sunrise} 
-              sunset={weatherData.sunset} 
-              sunriseTime={weatherData.sunriseTime} 
-              sunsetTime={weatherData.sunsetTime} 
-              currentTime={weatherData.currentTime} 
-              condition={weatherData.condition} 
-            />
-
-            <Forecast daily={weatherData.daily} />
-            
-            <WeatherMap 
-              lat={weatherData.lat} 
-              lon={weatherData.lon} 
-              onLocationClick={handleLocationSearch}
-              locationName={weatherData.location}
-            />
-            <LifestyleTips weatherData={weatherData} />
-          </>
+          </div>
         )}
       </main>
     </div>
