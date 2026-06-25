@@ -7,7 +7,11 @@ const DaylightBar = ({ sunrise, sunset, sunriseTime, sunsetTime, currentTime, co
   let remainingText = '';
   
   if (currentTime < sunriseTime) {
-    progress = 0;
+    const prevSunset = sunsetTime - 86400;
+    const totalNight = sunriseTime - prevSunset;
+    const passedNight = currentTime - prevSunset;
+    progress = Math.min((passedNight / totalNight) * 100, 100);
+    
     const diff = sunriseTime - currentTime;
     const h = Math.floor(diff / 3600);
     const m = Math.floor((diff % 3600) / 60);
