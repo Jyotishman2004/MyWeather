@@ -103,7 +103,7 @@ function App() {
         ) : !weatherData ? (
           <div style={{ display: 'flex', flexDirection: 'column', alignItems: 'center', justifyContent: 'center', height: '60vh', textAlign: 'center' }}>
             <div className="paper-card" style={{ padding: '3rem', maxWidth: '500px' }}>
-              <h2 style={{ fontSize: '2rem', marginBottom: '1rem', fontWeight: '600' }}>Welcome to WeatherApp</h2>
+              <h2 style={{ fontSize: '2rem', marginBottom: '1rem', fontWeight: '600' }}>Welcome to Atmos</h2>
               <p style={{ opacity: 0.8, fontSize: '1.1rem', lineHeight: '1.5' }}>
                 Enter a city name above or click the location icon to check the current weather and forecasts for your area.
               </p>
